@@ -1,7 +1,7 @@
 
 # Pa11y CI ![beta stage][status-badge]
 
-This is a new project based around Pa11y, named Pa11y CI. Pa11y CI will be a command-line tool which runs Pa11y against multiple URLs. It will be heavily geared towards easily running in CI environments against new versions of websites, but will also be runnable in local development.
+This is a new project based around Pa11y, named Pa11y CI. Pa11y CI will be a tool for running Pa11y against multiple URLs. It will be heavily geared towards easily running in CI environments against new versions of websites, but will also be runnable in local development.
 
 :sparkles: [Click here for the full proposal document, project roadmap, and FAQs](PROPOSAL.md) :sparkles:
 
@@ -15,16 +15,25 @@ This is a new project based around Pa11y, named Pa11y CI. Pa11y CI will be a com
 [![LGPL-3.0 licensed][shield-license]][info-license]
 
 
+
+## Table Of Contents
+- [Requirements](#requirements)
+- [Command-Line Interface](#command-line-interface)
+- [JavaScript Interface](#javascript-interface)
+
+
 ## Requirements
 
-This command line tool requires [Node.js] 4+. You can install through npm:
+Pa11y CI requires [Node.js] 4+.
+
+
+## Command-Line Interface
+
+Install Pa11y CI globally with npm:
 
 ```sh
 npm install -g pa11y-ci
 ```
-
-
-## Usage
 
 Pa11y CI can be used by running it as a command line tool, `pa11y-ci`:
 
@@ -41,6 +50,73 @@ Options:
   -r, --sitemap-replace <string>  a replacement to apply in sitemaps. Use with --sitemap-find
   -j, --json                      Output results as JSON
 ```
+
+## JavaScript Interface
+
+Install Pa11y with npm or add to your `package.json`:
+```sh
+npm install pa11y-ci
+```
+Require Pa11yi CI:
+
+```js
+const pa11yCi = require('pa11y-ci');
+```
+
+Create an array of URL's you wish to test:
+
+```js
+const urls = [
+  'http://pa11y.org/',
+  'http://pa11y.org/contributing'
+];
+```
+
+Test those URL's using Pa11y CI:
+
+```js
+pa11yCi(urls).then((results) => {
+  console.log(results);
+})
+```
+
+Pa11y CI returns an ES6 promise with a results object.
+
+```js
+{
+  total: 2,
+  passes: 1,
+  results:
+  {
+    'http://pa11y.org/contributing':
+      [
+        {
+          code: 'WCAG2AA.Principle1.Guideline1_1.1_1_1.H2.EG3',
+          context: '<img width="32" height="32" title="" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2V...',
+          message: 'Img element inside a link must not use alt text that duplicates the content of a text link beside it.',
+          selector: 'html > body > div > a:nth-child(7) > img',
+          type: 'error',
+          typeCode: 1
+        },
+        { 
+          code: 'WCAG2AA.Principle1.Guideline1_1.1_1_1.H30.2',
+          context: '<a href="/" class="logo logo-img-2x">\n        <img width="32" height...</a>',
+          message: 'Img element is the only content of the link, but is missing alt text. The alt text should describe the purpose of the link.',
+          selector: 'html > body > div > a:nth-child(8)',
+          type: 'error',
+          typeCode: 1
+        }
+      ],
+     'http://pa11y.org/': []
+  }
+}
+``` 
+
+
+
+
+
+
 
 ### Configuration
 
