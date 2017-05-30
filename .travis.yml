@@ -19,4 +19,4 @@ before_script:
   - npm install -g pa11y-reporter-ci
 
 script: 
-  - pa11y http://open-cart.azurewebsites.net/ -r ci -s WCAG2AAA
+  - pa11y open-cart.azurewebsites.net -r ci -s WCAG2AAA
