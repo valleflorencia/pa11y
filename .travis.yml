@@ -13,24 +13,10 @@ matrix:
     - node_js: '5'
     - node_js: '6'
 
-# Global environment variables
-env:
-  global:
-    - TEST_DATABASE=postgres://postgres:@localhost:5432/pa11y_sidekick_travis
-
-# Services setup
-services:
-  - postgresql
-
-# Restrict builds on branches
-branches:
-  only:
-    - master
-    - /^\d+\.\d+\.\d+$/
-
-# Build script
 before_script:
-  - psql -c "CREATE DATABASE pa11y_sidekick_travis" -U postgres
-script:
-  - 'if [ $LINT ]; then make verify; fi'
-  - 'if [ ! $LINT ]; then make test; fi'
+  - npm install -g http-server
+  - npm install -g pa11y
+  - npm install -g pa11y-reporter-ci
+
+script: 
+  - pa11y http://open-cart.azurewebsites.net/ -r ci -s WCAG2AAA
