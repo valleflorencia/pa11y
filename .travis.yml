@@ -5,4 +5,4 @@ before_script:
 
 script: 
   - nohup http-server -p 8080 >/dev/null 2>&1 &
-  - pa11y open-cart.azurewebsites.net -r ci -s WCAG2AAA
+  -pa11y open-cart.azurewebsites.net -s WCAG2AA
