@@ -1,18 +1,3 @@
-
-# Build matrix
-language: node_js
-matrix:
-  include:
-
-    # Run linter once
-    - node_js: '6'
-      env: LINT=true
-
-    # Run tests
-    - node_js: '4'
-    - node_js: '5'
-    - node_js: '6'
-
 before_script:
   - npm install -g http-server
   - npm install -g pa11y
